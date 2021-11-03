@@ -109,6 +109,7 @@ struct ContentView: View
                         dataModel.getCurrencies()
                         //print(dataModel.currencies)
                         print("Conversion Rate\n" + fromCurrency + " to " + toCurrency)
+                        
                         loadRatesData()
                         //print(rate)
                     })
@@ -176,8 +177,10 @@ struct ContentView: View
                         
                              let resultDictionary: Dictionary<String, Dictionary<String, Double>> = responseDecoder.rates
                              rate = responseDecoder.rates[pair]!["rate"]!
-                             solution += "Hello"
-                             
+                             solution += String(rate)
+                             solution += "\n"
+                             var myTimestamp:Double = responseDecoder.rates[pair]!["timestamp"]!
+                             solution += dataModel.convertTimeStamp(timestamp: myTimestamp - (3600*4))
                              let resultNSDictionary = resultDictionary as NSDictionary
                              //print(resultNSDictionary)
                              

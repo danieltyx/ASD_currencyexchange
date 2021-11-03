@@ -20,7 +20,7 @@ class PListManager: NSObject
        5. Add the funtionality that can perform currency exchanges that are not listed in the pairs. Use math and two different pairs
           to calculate the exchange rate by going through the USD. For example, CADEUR is not listed in the pairs but USDCAD and USDEUR are
           listed. Therefore a CADEUR search should use the two searches (USDCAD and USDEUR) and some math to figure out the exchange.
-       6. It's a competition so add any functionality that enhances the app.
+       6. It's a competition so add any functionality that enhances the app.//time modfication/ voice activation/ search bar
      
         Happy Coding :-)
      */
