@@ -181,8 +181,13 @@ struct ContentView: View
                              solution += "\n"
                              var myTimestamp:Double = responseDecoder.rates[pair]!["timestamp"]!
                              solution += dataModel.convertTimeStamp(timestamp: myTimestamp - (3600*4))
+                             
+                        
+                             
                              let resultNSDictionary = resultDictionary as NSDictionary
+                             manager.writePlist(namePlist: <#T##String#>, key: <#T##String#>, data: <#T##AnyObject#>)
                              //print(resultNSDictionary)
+                             manager.readPlist(namePlist: <#T##String#>, key: <#T##String#>)
                              
                          }
                      }
