@@ -20,9 +20,9 @@ struct ContentView: View
     @State private var fromCurrency = "USD"
     @State private var toCurrency = "USD"
     @State private var solution = ""
-    
+    @State private var rate = 0.0
     @State private var currencies = ["USD", "EUR", "GBP"]
-    
+    @State private var amountCurrency = 1.0
    
     
         var body: some View
@@ -42,11 +42,11 @@ struct ContentView: View
                         }
                         HStack
                         {
-                                   Picker("From", selection: $fromCurrency)
+                                   Picker("From", selection: $toCurrency)
                                    {
                                         ForEach(currencies, id: \.self)
                                         {
-                                            if $0 == fromCurrency
+                                            if $0 == toCurrency
                                             {
                                                 Text(String($0))
                                                 .foregroundColor(Color.green)
@@ -61,7 +61,7 @@ struct ContentView: View
                                         .font(.largeTitle)
                                     
                                     }
-                                   .onChange(of: fromCurrency, perform: { newValue in
+                                   .onChange(of: toCurrency, perform: { newValue in
                                        solution = ""
                                        print("Changed")
                                    })
@@ -72,11 +72,11 @@ struct ContentView: View
                             
                             
                             
-                                     Picker("Currency", selection: $toCurrency)
+                                     Picker("Currency", selection: $fromCurrency)
                                      {
                                          ForEach(currencies, id: \.self)
                                          {
-                                             if $0 == toCurrency
+                                             if $0 == fromCurrency
                                              {
                                                  Text(String($0))
                                                  .foregroundColor(Color.yellow)
@@ -90,7 +90,7 @@ struct ContentView: View
                                          }
                                          .font(.largeTitle)
                                      }
-                                     .onChange(of: toCurrency, perform: { newValue in
+                                     .onChange(of: fromCurrency, perform: { newValue in
                                          solution = ""
                                      })
                                      .pickerStyle(.wheel)
@@ -101,7 +101,12 @@ struct ContentView: View
                     // solution = "Conversion Rate\n" + fromCurrency + " to " + toCurrency
                     //print("load exchange")
 
-                    Button(action:{})
+                    Button(action:{
+                        dataModel.getCurrencies()
+                        //print(dataModel.currencies)
+                        print("Conversion Rate\n" + fromCurrency + " to " + toCurrency)
+                        
+                        loadRatesData()})
                          {
                              let width = UIScreen.main.bounds.width
                              Text("Convert")
@@ -137,7 +142,7 @@ struct ContentView: View
     func updateCurrency()
     {
         let currenciesDic = manager.readPlist(namePlist: "Currencies", key: "currencies")
-        print("Hello:",currenciesDic.count)
+        //print("Hello:",currenciesDic.count)
         currencies = currenciesDic["currencies"] as! [String]
         
     }
@@ -164,9 +169,19 @@ struct ContentView: View
                          {
                              print(responseDecoder)
                              print(responseDecoder.rates)
+                            
                              let resultDictionary: Dictionary<String, Dictionary<String, Double>> = responseDecoder.rates
+                             rate = responseDecoder.rates[pair]!["rate"]!
+                             
+                             solution += String(amountCurrency) + " " + toCurrency + String(" is ") + "\n"
+                             let res = rate * amountCurrency
+                             solution += String(res)
+                             solution += fromCurrency
+                             solution += "\n"
+                             let myTimestamp:Double = responseDecoder.rates[pair]!["timestamp"]!
+                             solution += dataModel.convertTimeStamp(timestamp: myTimestamp - (3600*5))
                              let resultNSDictionary = resultDictionary as NSDictionary
-                             print(resultNSDictionary)
+                             //print(resultNSDictionary)
                              
                          }
                      }
