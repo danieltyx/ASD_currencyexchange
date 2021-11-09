@@ -52,13 +52,16 @@ struct CurrencyExchangeApp: App
                      {
                          DispatchQueue.main.async
                          {
-                             //print(responseDecoder)
+                             print(responseDecoder)
                              dataModel.pairs = responseDecoder.supportedPairs
-                             dataModel.getCurrencies()
-                             let currenciesDictionary = ["currencies":dataModel.currencies]
+                             
+                             
+                             
+                             let testarry = dataModel.getCurrencies() as [String]
+                             let currenciesDictionary = ["currencies":testarry]
+                             
                              manager.writePlist(namePlist: "Currencies", key: "currencies", data: currenciesDictionary as AnyObject)
                              
-                            
                          }
                          
                      }

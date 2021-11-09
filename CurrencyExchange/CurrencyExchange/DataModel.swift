@@ -34,17 +34,19 @@ public class DataModel: ObservableObject
         let strDate = dateFormatter.string(from: date)
         return strDate
     }
+    public func getCurrencies() -> [String]
+     {
+         var currenciesSet = Set<String>()
+         for pair in pairs
+         {
+             let firstCurrency = pair.getSubString(0, 3)
+             let secondCurrency = pair.getSubString(3, 6)
+             currenciesSet.insert(firstCurrency)
+             currenciesSet.insert(secondCurrency)
+         }
+         currencies = Array(currenciesSet).sorted()
+         return currencies
+     }
   
-   public func getCurrencies()
-    {
-        var currenciesSet = Set<String>()
-        for pair in pairs
-        {
-            let firstCurrency = pair.getSubString(0, 3)
-            let secondCurrency = pair.getSubString(3, 6)
-            currenciesSet.insert(firstCurrency)
-            currenciesSet.insert(secondCurrency)
-        }
-        currencies = Array(currenciesSet).sorted()
-    }
+   
 }

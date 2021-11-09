@@ -9,26 +9,24 @@ import SwiftUI
 
 struct ContentView: View
 {
-    
-    let dataModel = DataModel.sharedInstance
+     let dataModel = DataModel.sharedInstance
     let manager = PListManager()
-    
     init()
     {
         UITextView.appearance().backgroundColor = .clear
+        
     }
     
     @State private var fromCurrency = "USD"
     @State private var toCurrency = "USD"
     @State private var solution = ""
-    @State private var rate = 0.0
     
     @State private var currencies = ["USD", "EUR", "GBP"]
-
+    
    
+    
         var body: some View
         {
-            
             GeometryReader
             { geometry in
     
@@ -46,7 +44,6 @@ struct ContentView: View
                         {
                                    Picker("From", selection: $fromCurrency)
                                    {
-                                       
                                         ForEach(currencies, id: \.self)
                                         {
                                             if $0 == fromCurrency
@@ -104,15 +101,7 @@ struct ContentView: View
                     // solution = "Conversion Rate\n" + fromCurrency + " to " + toCurrency
                     //print("load exchange")
 
-                    Button(action:{
-                        
-                        dataModel.getCurrencies()
-                        //print(dataModel.currencies)
-                        print("Conversion Rate\n" + fromCurrency + " to " + toCurrency)
-                        
-                        loadRatesData()
-                        //print(rate)
-                    })
+                    Button(action:{})
                          {
                              let width = UIScreen.main.bounds.width
                              Text("Convert")
@@ -141,18 +130,19 @@ struct ContentView: View
             
             .background(Color.black)
          
-           Text(String(rate))
+          
         }//end body
         
- 
     
-   
     func updateCurrency()
     {
         let currenciesDic = manager.readPlist(namePlist: "Currencies", key: "currencies")
+        print("Hello:",currenciesDic.count)
         currencies = currenciesDic["currencies"] as! [String]
-   
+        
     }
+   
+    
     func loadRatesData()
     {
         let pair = toCurrency+fromCurrency
@@ -172,32 +162,18 @@ struct ContentView: View
                      {
                          DispatchQueue.main.async
                          {
-                             //print(responseDecoder)
+                             print(responseDecoder)
                              print(responseDecoder.rates)
-                        
                              let resultDictionary: Dictionary<String, Dictionary<String, Double>> = responseDecoder.rates
-                             rate = responseDecoder.rates[pair]!["rate"]!
-                             solution += String(rate)
-                             solution += "\n"
-                             var myTimestamp:Double = responseDecoder.rates[pair]!["timestamp"]!
-                             solution += dataModel.convertTimeStamp(timestamp: myTimestamp - (3600*4))
-                             
-                        
-                             
                              let resultNSDictionary = resultDictionary as NSDictionary
-                             manager.writePlist(namePlist: <#T##String#>, key: <#T##String#>, data: <#T##AnyObject#>)
-                             //print(resultNSDictionary)
-                             manager.readPlist(namePlist: <#T##String#>, key: <#T##String#>)
+                             print(resultNSDictionary)
                              
                          }
                      }
             }
         }.resume()
     }
-    func printCurrencies()
-    {
-        print(currencies)
-    }
+    
     
     
 }//end Content View
