@@ -18,6 +18,7 @@
 		21649CC5272315AE00BE3C0B /* Exchange.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21649CC4272315AE00BE3C0B /* Exchange.plist */; };
 		21B91F4B272354590097D551 /* EmptyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21B91F4A272354590097D551 /* EmptyList.plist */; };
 		40965B8E273AF73800D8504C /* Currencies.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40965B8D273AF73800D8504C /* Currencies.plist */; };
+		40965B90273B764700D8504C /* History.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40965B8F273B764700D8504C /* History.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		21649CC4272315AE00BE3C0B /* Exchange.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Exchange.plist; sourceTree = "<group>"; };
 		21B91F4A272354590097D551 /* EmptyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = EmptyList.plist; sourceTree = "<group>"; };
 		40965B8D273AF73800D8504C /* Currencies.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Currencies.plist; sourceTree = "<group>"; };
+		40965B8F273B764700D8504C /* History.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = History.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				21649CC4272315AE00BE3C0B /* Exchange.plist */,
 				21B91F4A272354590097D551 /* EmptyList.plist */,
 				40965B8D273AF73800D8504C /* Currencies.plist */,
+				40965B8F273B764700D8504C /* History.plist */,
 				21370D802720EAE400E329C1 /* DataModel.swift */,
 				21370D82272112AC00E329C1 /* PListManager.swift */,
 				21649CC22723103B00BE3C0B /* Test.plist */,
@@ -148,6 +151,7 @@
 			files = (
 				214DBE92271E508C00A10433 /* Preview Assets.xcassets in Resources */,
 				21649CC32723103B00BE3C0B /* Test.plist in Resources */,
+				40965B90273B764700D8504C /* History.plist in Resources */,
 				214DBE8F271E508C00A10433 /* Assets.xcassets in Resources */,
 				21649CC5272315AE00BE3C0B /* Exchange.plist in Resources */,
 				21B91F4B272354590097D551 /* EmptyList.plist in Resources */,
@@ -297,7 +301,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CurrencyExchange/Preview Content\"";
-				DEVELOPMENT_TEAM = PTRXLY6YYD;
+				DEVELOPMENT_TEAM = 23PGFXBJ3M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -312,7 +316,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Lake.CurrencyExchange;
+				PRODUCT_BUNDLE_IDENTIFIER = daniel.CurrencyExchange;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -328,7 +332,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CurrencyExchange/Preview Content\"";
-				DEVELOPMENT_TEAM = PTRXLY6YYD;
+				DEVELOPMENT_TEAM = 23PGFXBJ3M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -343,7 +347,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Lake.CurrencyExchange;
+				PRODUCT_BUNDLE_IDENTIFIER = daniel.CurrencyExchange;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

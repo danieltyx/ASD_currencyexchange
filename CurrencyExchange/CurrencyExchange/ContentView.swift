@@ -23,7 +23,7 @@ struct ContentView: View
     @State private var rate = 0.0
     @State private var currencies = ["USD", "EUR", "GBP"]
     @State private var amountCurrency = 1.0
-   
+    @State private var histArray = [Dictionary<String,String>]()
     
         var body: some View
         {
@@ -100,25 +100,55 @@ struct ContentView: View
                     
                     // solution = "Conversion Rate\n" + fromCurrency + " to " + toCurrency
                     //print("load exchange")
-
-                    Button(action:{
-                        dataModel.getCurrencies()
-                        //print(dataModel.currencies)
-                        print("Conversion Rate\n" + fromCurrency + " to " + toCurrency)
+                    HStack
+                    {
+                        Button(action:{
+                            dataModel.getCurrencies()
+                            //print(dataModel.currencies)
+                            print("Conversion Rate\n" + fromCurrency + " to " + toCurrency)
+                            solution = ""
+                            loadRatesData()
+                            
+                            
+                        })
+                             {
+                                 let width = UIScreen.main.bounds.width
+                                 Text("Convert")
+                                        .fontWeight(.bold)
+                                        .font(.title)
+                                        .frame(minWidth: 0, maxWidth: width/2)
+                                        .padding()
+                                        .foregroundColor(.white)
+                                        .background(LinearGradient(gradient: Gradient(colors: [Color.green]), startPoint: .leading, endPoint: .trailing))
+                                        .cornerRadius(30)
+                                 
+                             }
+                        Button(action:{
+                            
+                            let readFromPlist = manager.readPlist(namePlist: "History", key: "history")
+                           
+                                let histDict = readFromPlist as! [Dictionary<String,String>]
+                            for histsearch in histDict{
+                                solution += histsearch["solution"] ?? ""
+                            }
+                            
+                            
+                            
+                        })
+                             {
+                                 let width = UIScreen.main.bounds.width
+                                 Text("History")
+                                        .fontWeight(.bold)
+                                        .font(.title)
+                                        .frame(minWidth: 0, maxWidth: width/2)
+                                        .padding()
+                                        .foregroundColor(.white)
+                                        .background(LinearGradient(gradient: Gradient(colors: [Color.green]), startPoint: .leading, endPoint: .trailing))
+                                        .cornerRadius(30)
+                                 
+                             }
                         
-                        loadRatesData()})
-                         {
-                             let width = UIScreen.main.bounds.width
-                             Text("Convert")
-                                    .fontWeight(.bold)
-                                    .font(.title)
-                                    .frame(minWidth: 0, maxWidth: width/2)
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(LinearGradient(gradient: Gradient(colors: [Color.green]), startPoint: .leading, endPoint: .trailing))
-                                    .cornerRadius(30)
-                             
-                         }
+                    }
                     
                     
                     Text(solution)
@@ -180,12 +210,15 @@ struct ContentView: View
                              solution += "\n"
                              let myTimestamp:Double = responseDecoder.rates[pair]!["timestamp"]!
                              solution += dataModel.convertTimeStamp(timestamp: myTimestamp - (3600*5))
+                             solution += "\n"
                              let resultNSDictionary = resultDictionary as NSDictionary
                              //print(resultNSDictionary)
-                             
+                             histArray += [["timestamp":String(myTimestamp),"solution":solution]]
+                             manager.writePlist(namePlist: "History", key: "history", data: histArray as AnyObject)
                          }
-                     }
+                     }else{solution += "Sorry, the converstion rate is unavailable now."}
             }
+            
         }.resume()
     }
     
