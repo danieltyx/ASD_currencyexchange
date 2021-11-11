@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BetterSafariView
 
 struct ContentView: View
 {
@@ -21,10 +22,15 @@ struct ContentView: View
     @State private var toCurrency = "USD"
     @State private var solution = ""
     @State private var rate = 0.0
+    @State private var rate2 = 0.0
     @State private var currencies = ["USD", "EUR", "GBP"]
     @State private var amountCurrency = 1.0
     @State private var histArray = [Dictionary<String,String>]()
-    
+    @State private var histStringArray = [""]
+    @State private var myTimestamp = 0.0
+    @State private var isEditing = false
+    @State private var checkurl = "https://www.google.com/search?q=USD+to+CNY"
+    @State private var presentingSafariView = false
         var body: some View
         {
             GeometryReader
@@ -42,6 +48,83 @@ struct ContentView: View
                         }
                         HStack
                         {
+                        
+                            TextField("Search ...", text: $toCurrency)
+                                        .padding(7)
+                                        .padding(.horizontal, 25)
+                                        .background(Color(.systemGray6))
+                                        .cornerRadius(8)
+                                        .padding(.horizontal, 10)
+                                        
+                                    if isEditing {
+                                        Button(action: {
+                                            self.isEditing = false
+                                            self.toCurrency = ""
+                         
+                                        }) {
+                                            Text("Cancel")
+                                        }
+                                        .padding(.trailing, 10)
+                                        .transition(.move(edge: .trailing))
+                                        .animation(.default)
+                                    }
+                            Button(action:{
+                                var temp = toCurrency
+                                toCurrency = fromCurrency
+                                fromCurrency = temp
+                            }){
+                                Image(systemName: "arrow.triangle.2.circlepath")
+                            }
+                            
+                            TextField("Search ...", text: $fromCurrency)
+                                        .padding(7)
+                                        .padding(.horizontal, 25)
+                                        .background(Color(.systemGray6))
+                                        .cornerRadius(8)
+                                        .padding(.horizontal, 10)
+                                        
+                                    if isEditing {
+                                        Button(action: {
+                                            self.isEditing = false
+                                            self.toCurrency = ""
+                         
+                                        }) {
+                                            Text("Cancel")
+                                        }
+                                        .padding(.trailing, 10)
+                                        .transition(.move(edge: .trailing))
+                                        .animation(.default)
+                                    }
+                        }
+                        HStack
+                        {
+                            TextField("Search ...", value: $amountCurrency, formatter: NumberFormatter())
+                                        .padding(7)
+                                        .padding(.horizontal, 25)
+                                        .background(Color(.systemGray6))
+                                        .cornerRadius(8)
+                                        .padding(.horizontal, 10)
+                                        
+                                    if isEditing {
+                                        Button(action: {
+                                            self.isEditing = false
+                                            self.toCurrency = ""
+                         
+                                        }) {
+                                            Text("Cancel")
+                                        }
+                                        .padding(.trailing, 10)
+                                        .transition(.move(edge: .trailing))
+                                        .animation(.default)
+                                    }
+                            
+                            
+                        }
+                        HStack
+                        {
+                            
+                           
+                            
                                    Picker("From", selection: $toCurrency)
                                    {
                                         ForEach(currencies, id: \.self)
@@ -103,6 +186,8 @@ struct ContentView: View
                     HStack
                     {
                         Button(action:{
+                            histStringArray = []
+                            checkurl = "https://www.google.com/search?q="+String(amountCurrency)+toCurrency+"+to+"+fromCurrency
                             dataModel.getCurrencies()
                             //print(dataModel.currencies)
                             print("Conversion Rate\n" + fromCurrency + " to " + toCurrency)
@@ -127,11 +212,11 @@ struct ContentView: View
                             
                             let readFromPlist = manager.readPlist(namePlist: "History", key: "history")
                            
-                                let histDict = readFromPlist as! [Dictionary<String,String>]
+                            let histDict = readFromPlist as! [Dictionary<String,String>]
                             for histsearch in histDict{
-                                solution += histsearch["solution"] ?? ""
+                                histStringArray.append(histsearch["solution"] ?? "")
                             }
-                            
+                            histStringArray.removeFirst()
                             
                             
                         })
@@ -143,28 +228,65 @@ struct ContentView: View
                                         .frame(minWidth: 0, maxWidth: width/2)
                                         .padding()
                                         .foregroundColor(.white)
-                                        .background(LinearGradient(gradient: Gradient(colors: [Color.green]), startPoint: .leading, endPoint: .trailing))
+                                        .background(LinearGradient(gradient: Gradient(colors: [Color.red]), startPoint: .leading, endPoint: .trailing))
                                         .cornerRadius(30)
                                  
                              }
                         
+                        
+                        
                     }
-                    
-                    
                     Text(solution)
                         .background(Color.black)
                         .foregroundColor(.white)
-                        .font(.custom("Copperplate", size: 40))
+                        .font(.custom("Copperplate", size: 35))
                         .multilineTextAlignment(.center)
                         
                       
                     Spacer()
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            ForEach(histStringArray.reversed(),id:\.self) { element in
+                                Text(element)
+                                    .foregroundColor(.white)
+                                    .font(.custom("Copperplate", size: 30))
+                                    .frame(width: 400, height: 125)
+                                    .background(Color.red)
+                            }
+                        }
+                    }
+                    .frame(height: 200)
+                    
+                    
+                    Button(action: {
+                               self.presentingSafariView = true
+                        
+                        
+                           }) {
+                               Text("Check with google?")
+                                   .font(.title)
+                               
+                           }
+                           .safariView(isPresented: $presentingSafariView) {
+                               SafariView(
+                                   url: URL(string: checkurl)!,
+                                   configuration: SafariView.Configuration(
+                                       entersReaderIfAvailable: false,
+                                       barCollapsingEnabled: true
+                                   )
+                               )
+                               .preferredBarAccentColor(.clear)
+                               .preferredControlAccentColor(.accentColor)
+                               .dismissButtonStyle(.done)
+                           }
                 }//end VStack
                
             }//end Geometry Reader
             
             .background(Color.black)
-         
+            .edgesIgnoringSafeArea(.all)
+            
+        //
           
         }//end body
         
@@ -177,11 +299,14 @@ struct ContentView: View
         
     }
    
-    
-    func loadRatesData()
+    func connectURLSession(mode:Int,getPair:String)
     {
-        let pair = toCurrency+fromCurrency
-        let urlString = "https://www.freeforexapi.com/api/live?pairs="+pair
+        var pair:String = getPair
+        if(mode == 2)
+        {
+            pair = fromCurrency + toCurrency
+        }
+        let urlString = "https://www.freeforexapi.com/api/live?pairs=" + pair
         
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
@@ -199,28 +324,93 @@ struct ContentView: View
                          {
                              print(responseDecoder)
                              print(responseDecoder.rates)
-                            
+                             myTimestamp = responseDecoder.rates[pair]!["timestamp"]!
+                             
                              let resultDictionary: Dictionary<String, Dictionary<String, Double>> = responseDecoder.rates
                              rate = responseDecoder.rates[pair]!["rate"]!
-                             
+                             if(mode == 2){rate = 1/rate}
                              solution += String(amountCurrency) + " " + toCurrency + String(" is ") + "\n"
                              let res = rate * amountCurrency
-                             solution += String(res)
+                             solution += String(format: "%.5f ",res)
                              solution += fromCurrency
                              solution += "\n"
-                             let myTimestamp:Double = responseDecoder.rates[pair]!["timestamp"]!
+                             
                              solution += dataModel.convertTimeStamp(timestamp: myTimestamp - (3600*5))
                              solution += "\n"
-                             let resultNSDictionary = resultDictionary as NSDictionary
+                             //let resultNSDictionary = resultDictionary as NSDictionary
                              //print(resultNSDictionary)
                              histArray += [["timestamp":String(myTimestamp),"solution":solution]]
                              manager.writePlist(namePlist: "History", key: "history", data: histArray as AnyObject)
                          }
                      }else{solution += "Sorry, the converstion rate is unavailable now."}
             }
-            
+           
         }.resume()
     }
+    func loadRatesData()
+    {
+        let pair = toCurrency+fromCurrency
+        
+        if(dataModel.isPair(requestPair: pair))
+        {
+            connectURLSession(mode: 1, getPair: pair)
+        }
+        else if(dataModel.isPair(requestPair: fromCurrency+toCurrency))
+        {
+            connectURLSession(mode: 2, getPair: pair)
+        }
+        else if(dataModel.isPair(requestPair: "USD"+toCurrency) && dataModel.isPair(requestPair: "USD"+fromCurrency))
+        {
+            let urlString = "https://www.freeforexapi.com/api/live?pairs=" + "USD" + toCurrency + "," + "USD" + fromCurrency
+            
+            guard let url = URL(string: urlString) else {
+                print("Invalid URL")
+                return
+            }
+            
+            let request = URLRequest(url: url)
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let data = data
+                {
+                         if let responseDecoder = try? JSONDecoder().decode(ExchangeRate.self, from: data)
+                         {
+                             DispatchQueue.main.async
+                             {
+                                 print(responseDecoder)
+                                 print(responseDecoder.rates)
+                                 myTimestamp = responseDecoder.rates["USD"+fromCurrency]!["timestamp"]!
+                                 
+                                 let resultDictionary: Dictionary<String, Dictionary<String, Double>> = responseDecoder.rates
+                                 rate = responseDecoder.rates["USD"+fromCurrency]!["rate"]!
+                                 rate2 = responseDecoder.rates["USD"+toCurrency]!["rate"]!
+                                 rate = rate/rate2
+                                 solution += String(amountCurrency) + " " + toCurrency + String(" is ") + "\n"
+                                 let res = rate * amountCurrency
+                                 solution += String(format: "%.5f ",res)
+                                 solution += fromCurrency
+                                 solution += "\n"
+                                 
+                                 solution += dataModel.convertTimeStamp(timestamp: myTimestamp - (3600*5))
+                                 solution += "\n"
+                                 //let resultNSDictionary = resultDictionary as NSDictionary
+                                 //print(resultNSDictionary)
+                                 histArray += [["timestamp":String(myTimestamp),"solution":solution]]
+                                 manager.writePlist(namePlist: "History", key: "history", data: histArray as AnyObject)
+                             }
+                         }
+                        else{solution += "Sorry, the converstion rate is unavailable now."}
+                }
+               
+            }.resume()
+        }
+            
+        
+    }
+        
+        
+        
+       
     
     
     

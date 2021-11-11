@@ -17,8 +17,9 @@
 		21649CC32723103B00BE3C0B /* Test.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21649CC22723103B00BE3C0B /* Test.plist */; };
 		21649CC5272315AE00BE3C0B /* Exchange.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21649CC4272315AE00BE3C0B /* Exchange.plist */; };
 		21B91F4B272354590097D551 /* EmptyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21B91F4A272354590097D551 /* EmptyList.plist */; };
+		408A776E273CD47A007DD668 /* History.plist in Resources */ = {isa = PBXBuildFile; fileRef = 408A776D273CD47A007DD668 /* History.plist */; };
+		408C4E62273CBB950068EADA /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = 408C4E61273CBB950068EADA /* BetterSafariView */; };
 		40965B8E273AF73800D8504C /* Currencies.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40965B8D273AF73800D8504C /* Currencies.plist */; };
-		40965B90273B764700D8504C /* History.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40965B8F273B764700D8504C /* History.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,8 +34,8 @@
 		21649CC22723103B00BE3C0B /* Test.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Test.plist; sourceTree = "<group>"; };
 		21649CC4272315AE00BE3C0B /* Exchange.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Exchange.plist; sourceTree = "<group>"; };
 		21B91F4A272354590097D551 /* EmptyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = EmptyList.plist; sourceTree = "<group>"; };
+		408A776D273CD47A007DD668 /* History.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = History.plist; sourceTree = "<group>"; };
 		40965B8D273AF73800D8504C /* Currencies.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Currencies.plist; sourceTree = "<group>"; };
-		40965B8F273B764700D8504C /* History.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = History.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				408C4E62273CBB950068EADA /* BetterSafariView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,7 +75,7 @@
 				21649CC4272315AE00BE3C0B /* Exchange.plist */,
 				21B91F4A272354590097D551 /* EmptyList.plist */,
 				40965B8D273AF73800D8504C /* Currencies.plist */,
-				40965B8F273B764700D8504C /* History.plist */,
+				408A776D273CD47A007DD668 /* History.plist */,
 				21370D802720EAE400E329C1 /* DataModel.swift */,
 				21370D82272112AC00E329C1 /* PListManager.swift */,
 				21649CC22723103B00BE3C0B /* Test.plist */,
@@ -107,6 +109,9 @@
 			dependencies = (
 			);
 			name = CurrencyExchange;
+			packageProductDependencies = (
+				408C4E61273CBB950068EADA /* BetterSafariView */,
+			);
 			productName = CurrencyExchange;
 			productReference = 214DBE87271E508B00A10433 /* CurrencyExchange.app */;
 			productType = "com.apple.product-type.application";
@@ -135,6 +140,9 @@
 				Base,
 			);
 			mainGroup = 214DBE7E271E508A00A10433;
+			packageReferences = (
+				408C4E60273CBB950068EADA /* XCRemoteSwiftPackageReference "BetterSafariView" */,
+			);
 			productRefGroup = 214DBE88271E508B00A10433 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -151,7 +159,7 @@
 			files = (
 				214DBE92271E508C00A10433 /* Preview Assets.xcassets in Resources */,
 				21649CC32723103B00BE3C0B /* Test.plist in Resources */,
-				40965B90273B764700D8504C /* History.plist in Resources */,
+				408A776E273CD47A007DD668 /* History.plist in Resources */,
 				214DBE8F271E508C00A10433 /* Assets.xcassets in Resources */,
 				21649CC5272315AE00BE3C0B /* Exchange.plist in Resources */,
 				21B91F4B272354590097D551 /* EmptyList.plist in Resources */,
@@ -377,6 +385,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		408C4E60273CBB950068EADA /* XCRemoteSwiftPackageReference "BetterSafariView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stleamist/BetterSafariView.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		408C4E61273CBB950068EADA /* BetterSafariView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 408C4E60273CBB950068EADA /* XCRemoteSwiftPackageReference "BetterSafariView" */;
+			productName = BetterSafariView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 214DBE7F271E508A00A10433 /* Project object */;
 }

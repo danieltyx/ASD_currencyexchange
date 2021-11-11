@@ -47,6 +47,10 @@ public class DataModel: ObservableObject
          currencies = Array(currenciesSet).sorted()
          return currencies
      }
-  
+    public func isPair(requestPair:String) -> Bool
+    {
+        return pairs.contains(requestPair)
+    }
+    
    
 }
