@@ -239,7 +239,7 @@ struct ContentView: View
                     Text(solution)
                         .background(Color.black)
                         .foregroundColor(.white)
-                        .font(.custom("Copperplate", size: 35))
+                        .font(.custom("Copperplate", size: 30))
                         .multilineTextAlignment(.center)
                         
                       
@@ -284,7 +284,6 @@ struct ContentView: View
             }//end Geometry Reader
             
             .background(Color.black)
-            .edgesIgnoringSafeArea(.all)
             
         //
           
